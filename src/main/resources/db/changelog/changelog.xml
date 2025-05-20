@@ -1,0 +1,86 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="David Kirakosyan">
+        <sql>
+            CREATE TABLE users (
+                                   id BIGSERIAL PRIMARY KEY,
+                                   name VARCHAR(255) NOT NULL,
+                                   date_of_birth DATE NOT NULL,
+                                   password VARCHAR(255) NOT NULL
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="David Kirakosyan">
+        <sql>
+            CREATE TABLE accounts (
+                id      BIGSERIAL PRIMARY KEY,
+                user_id BIGINT UNIQUE  NOT NULL REFERENCES users (id),
+                balance DECIMAL(19, 2) NOT NULL CHECK (balance >= 0)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="David Kirakosyan">
+        <sql>
+            CREATE TABLE email_datas  (
+                id      BIGSERIAL PRIMARY KEY,
+                user_id BIGINT NOT NULL REFERENCES users (id),
+                email   VARCHAR(200) UNIQUE NOT NULL
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="David Kirakosyan">
+        <sql>
+            CREATE TABLE phone_datas  (
+                id      BIGSERIAL PRIMARY KEY,
+                user_id BIGINT NOT NULL REFERENCES users (id),
+                phone   VARCHAR(13) UNIQUE NOT NULL
+            );
+
+        </sql>
+    </changeSet>
+
+    <changeSet id="5" author="David Kirakosyan">
+        <sql>
+            INSERT INTO users (id, name, date_of_birth, password)
+            VALUES
+                (1, 'Ivan Petrov', '1993-05-01', 'password123'),
+                (2, 'Elena Smirnova', '1990-11-23', 'securePass456'),
+                (3, 'Oleg Ivanov', '1985-06-15', 'olegPass789');
+
+            INSERT INTO accounts (id, user_id, balance)
+            VALUES
+                (1, 1, 1000.00),
+                (2, 2, 2000.00),
+                (3, 3, 1500.00);
+
+            INSERT INTO email_datas (id, user_id, email)
+            VALUES
+                (1, 1, 'ivan.petrov@example.com'),
+                (2, 2, 'elena.smirnova@example.com'),
+                (3, 3, 'oleg.ivanov@example.com'),
+                (4, 3, 'oleg.alt@example.com');
+
+            INSERT INTO phone_datas (id, user_id, phone)
+            VALUES
+                (1, 1, '79201234567'),
+                (2, 2, '79207654321'),
+                (3, 3, '79200001122'),
+                (4, 3, '79209998877');
+
+
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="David Kirakosyan">
+        <sql>
+            ALTER TABLE accounts ADD COLUMN initial_balance DECIMAL(19, 2);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
