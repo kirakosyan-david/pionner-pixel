@@ -1,20 +1,5 @@
 package com.example.pioneerpixel.service;
 
-import com.example.pioneerpixel.BaseUnitTest;
-import com.example.pioneerpixel.dto.TransferMoneyRequestDto;
-import com.example.pioneerpixel.dto.UserDtoResponse;
-import com.example.pioneerpixel.entity.Account;
-import com.example.pioneerpixel.exception.custom.TransferException;
-import com.example.pioneerpixel.repositroy.AccountRepository;
-import com.example.pioneerpixel.service.impl.TransferServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-
-import java.math.BigDecimal;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,8 +10,24 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-class TransferServiceTest extends BaseUnitTest {
+import com.example.pioneerpixel.BaseUnitTest;
+import com.example.pioneerpixel.dto.TransferMoneyRequestDto;
+import com.example.pioneerpixel.dto.UserDtoResponse;
+import com.example.pioneerpixel.entity.Account;
+import com.example.pioneerpixel.exception.custom.TransferException;
+import com.example.pioneerpixel.kafka.KafkaProducer;
+import com.example.pioneerpixel.repositroy.AccountRepository;
+import com.example.pioneerpixel.service.impl.TransferServiceImpl;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+class TransferServiceTest extends BaseUnitTest {
 
     @Mock
     private AccountRepository accountRepository;
@@ -36,6 +37,9 @@ class TransferServiceTest extends BaseUnitTest {
 
     @InjectMocks
     private TransferServiceImpl transferService;
+
+  @Mock
+  private KafkaProducer kafkaProducer;
 
     private TransferMoneyRequestDto transferDto;
     private UserDtoResponse fromUser;
@@ -73,7 +77,8 @@ class TransferServiceTest extends BaseUnitTest {
         when(userService.getUserById(2L)).thenReturn(toUser);
         when(accountRepository.findById(1L)).thenReturn(Optional.of(fromAccount));
         when(accountRepository.findById(2L)).thenReturn(Optional.of(toAccount));
-        when(accountRepository.save(any(Account.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(accountRepository.save(any(Account.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
 
         assertDoesNotThrow(() -> transferService.transferMoney(transferDto));
 
@@ -91,10 +96,8 @@ class TransferServiceTest extends BaseUnitTest {
     void transferMoney_invalidAmount_throwsException() {
         transferDto.setAmount(BigDecimal.ZERO);
 
-        TransferException exception = assertThrows(
-                TransferException.class,
-                () -> transferService.transferMoney(transferDto)
-        );
+        TransferException exception =
+                assertThrows(TransferException.class, () -> transferService.transferMoney(transferDto));
 
         assertEquals("Invalid transfer amount", exception.getMessage());
         verifyNoInteractions(userService, accountRepository);
@@ -104,10 +107,8 @@ class TransferServiceTest extends BaseUnitTest {
     void transferMoney_nullAmount_throwsException() {
         transferDto.setAmount(null);
 
-        TransferException exception = assertThrows(
-                TransferException.class,
-                () -> transferService.transferMoney(transferDto)
-        );
+        TransferException exception =
+                assertThrows(TransferException.class, () -> transferService.transferMoney(transferDto));
 
         assertEquals("Invalid transfer amount", exception.getMessage());
         verifyNoInteractions(userService, accountRepository);
@@ -118,10 +119,8 @@ class TransferServiceTest extends BaseUnitTest {
         when(userService.getUserById(1L)).thenReturn(null);
         when(userService.getUserById(2L)).thenReturn(toUser);
 
-        TransferException exception = assertThrows(
-                TransferException.class,
-                () -> transferService.transferMoney(transferDto)
-        );
+        TransferException exception =
+                assertThrows(TransferException.class, () -> transferService.transferMoney(transferDto));
 
         assertEquals("One or both users not found", exception.getMessage());
         verify(userService).getUserById(1L);
@@ -134,10 +133,8 @@ class TransferServiceTest extends BaseUnitTest {
         when(userService.getUserById(1L)).thenReturn(fromUser);
         when(userService.getUserById(2L)).thenReturn(null);
 
-        TransferException exception = assertThrows(
-                TransferException.class,
-                () -> transferService.transferMoney(transferDto)
-        );
+        TransferException exception =
+                assertThrows(TransferException.class, () -> transferService.transferMoney(transferDto));
 
         assertEquals("One or both users not found", exception.getMessage());
         verify(userService).getUserById(1L);
@@ -152,10 +149,8 @@ class TransferServiceTest extends BaseUnitTest {
         when(userService.getUserById(1L)).thenReturn(fromUser);
         when(userService.getUserById(2L)).thenReturn(toUser);
 
-        TransferException exception = assertThrows(
-                TransferException.class,
-                () -> transferService.transferMoney(transferDto)
-        );
+        TransferException exception =
+                assertThrows(TransferException.class, () -> transferService.transferMoney(transferDto));
 
         assertEquals("Insufficient funds for transfer", exception.getMessage());
         verify(userService).getUserById(1L);
@@ -169,10 +164,8 @@ class TransferServiceTest extends BaseUnitTest {
         when(userService.getUserById(2L)).thenReturn(toUser);
         when(accountRepository.findById(1L)).thenReturn(Optional.empty());
 
-        TransferException exception = assertThrows(
-                TransferException.class,
-                () -> transferService.transferMoney(transferDto)
-        );
+        TransferException exception =
+                assertThrows(TransferException.class, () -> transferService.transferMoney(transferDto));
 
         assertEquals("From account not found", exception.getMessage());
         verify(userService).getUserById(1L);
@@ -188,10 +181,8 @@ class TransferServiceTest extends BaseUnitTest {
         when(accountRepository.findById(1L)).thenReturn(Optional.of(fromAccount));
         when(accountRepository.findById(2L)).thenReturn(Optional.empty());
 
-        TransferException exception = assertThrows(
-                TransferException.class,
-                () -> transferService.transferMoney(transferDto)
-        );
+        TransferException exception =
+                assertThrows(TransferException.class, () -> transferService.transferMoney(transferDto));
 
         assertEquals("To account not found", exception.getMessage());
         verify(userService).getUserById(1L);
@@ -200,5 +191,4 @@ class TransferServiceTest extends BaseUnitTest {
         verify(accountRepository).findById(2L);
         verifyNoMoreInteractions(accountRepository);
     }
-
 }

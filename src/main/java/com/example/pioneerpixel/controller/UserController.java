@@ -26,37 +26,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserService userService;
-    private final JwtTokenUtil tokenUtil;
+  private final UserService userService;
+  private final JwtTokenUtil tokenUtil;
 
-
-    @PostMapping("/login")
-    public ResponseEntity<UserAuthResponseDto> auth(@RequestBody UserLoginRequestDto loginRequestDto) {
-        log.info("Received login request with email: {}", loginRequestDto.getEmail());
-        boolean result = userService.userLogin(loginRequestDto);
-        if (!result) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        String token = tokenUtil.generateToken(loginRequestDto.getEmail());
-        return ResponseEntity.ok(new UserAuthResponseDto(token));
+  @PostMapping("/login")
+  public ResponseEntity<UserAuthResponseDto> auth(
+      @RequestBody UserLoginRequestDto loginRequestDto) {
+    log.info("Received login request with email: {}", loginRequestDto.getEmail());
+    boolean result = userService.userLogin(loginRequestDto);
+    if (!result) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+    String token = tokenUtil.generateToken(loginRequestDto.getEmail());
+    return ResponseEntity.ok(new UserAuthResponseDto(token));
+  }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<UserDtoResponse> getUserById(@PathVariable("id") Long id) {
+    UserDtoResponse user = userService.getUserById(id);
+    return ResponseEntity.ok(user);
+  }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDtoResponse> getUserById(@PathVariable("id") Long id) {
-        UserDtoResponse user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
-    }
+  @GetMapping("/{id}/contact")
+  public ResponseEntity<UserContactDtoResponse> getUserByContact(@PathVariable("id") Long id) {
+    UserContactDtoResponse contact = userService.getUserWithContact(id);
+    return ResponseEntity.ok(contact);
+  }
 
-    @GetMapping("/{id}/contact")
-    public ResponseEntity<UserContactDtoResponse> getUserByContact(@PathVariable("id") Long id) {
-        UserContactDtoResponse contact = userService.getUserWithContact(id);
-        return ResponseEntity.ok(contact);
-    }
-
-    @PostMapping("/search")
-    public ResponseEntity<Page<SearchUserDtoResponse>> searchUser(@RequestBody SearchUserDto searchUserDto) {
-        Page<SearchUserDtoResponse> users = userService.searchUser(searchUserDto);
-        return ResponseEntity.ok(users);
-    }
+  @PostMapping("/search")
+  public ResponseEntity<Page<SearchUserDtoResponse>> searchUser(
+      @RequestBody SearchUserDto searchUserDto) {
+    Page<SearchUserDtoResponse> users = userService.searchUser(searchUserDto);
+    return ResponseEntity.ok(users);
+  }
 }

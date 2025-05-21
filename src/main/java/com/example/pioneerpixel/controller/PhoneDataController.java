@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users/phone")
 public class PhoneDataController {
 
-    private final PhoneDataService phoneDataService;
+  private final PhoneDataService phoneDataService;
 
-    @PostMapping("{id}")
-    public ResponseEntity<UserPhoneDtoResponse> sendEmail(@PathVariable("id") Long userId,
-                                               @RequestBody UserPhoneDtoRequest phone) {
-        UserPhoneDtoResponse userPhoneDtoResponse = phoneDataService.addPhoneOrUpdate(userId, phone);
-        return ResponseEntity.ok(userPhoneDtoResponse);
-    }
+  @PostMapping("{id}")
+  public ResponseEntity<UserPhoneDtoResponse> sendEmail(
+      @PathVariable("id") Long userId, @RequestBody UserPhoneDtoRequest phone) {
+    UserPhoneDtoResponse userPhoneDtoResponse = phoneDataService.addPhoneOrUpdate(userId, phone);
+    return ResponseEntity.ok(userPhoneDtoResponse);
+  }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<PhoneData> deleteEmail(@PathVariable("id") Long userId, @RequestBody UserPhoneDtoRequest phone) {
-        phoneDataService.deletePhone(userId, phone);
-        return ResponseEntity.ok().build();
-    }
-
+  @DeleteMapping("/{id}")
+  public ResponseEntity<PhoneData> deleteEmail(
+      @PathVariable("id") Long userId, @RequestBody UserPhoneDtoRequest phone) {
+    phoneDataService.deletePhone(userId, phone);
+    return ResponseEntity.ok().build();
+  }
 }

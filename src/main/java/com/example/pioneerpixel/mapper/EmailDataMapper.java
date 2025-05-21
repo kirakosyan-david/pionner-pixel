@@ -8,7 +8,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface EmailDataMapper {
 
-    @Mapping(target = "name", expression = "java(emailData.getUser() != null ? emailData.getUser().getName() : null)")
-    @Mapping(source = "emailData.email", target = "email")
-    UserEmailDtoResponse mapToUserPhoneDtoResponse(EmailData emailData);
+  @Mapping(
+      target = "name",
+      expression = "java(emailData.getUser() != null ? emailData.getUser().getName() : null)")
+  @Mapping(source = "emailData.email", target = "email")
+  UserEmailDtoResponse mapToUserPhoneDtoResponse(EmailData emailData);
 }

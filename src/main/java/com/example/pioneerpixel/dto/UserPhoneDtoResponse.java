@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserPhoneDtoResponse {
 
-    private String name;
+  private String name;
 
-    private String phone;
+  private String phone;
 }

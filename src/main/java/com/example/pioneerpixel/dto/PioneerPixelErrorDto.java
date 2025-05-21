@@ -13,6 +13,5 @@ import lombok.Setter;
 @Builder
 public class PioneerPixelErrorDto {
 
-    private String message;
-
+  private String message;
 }

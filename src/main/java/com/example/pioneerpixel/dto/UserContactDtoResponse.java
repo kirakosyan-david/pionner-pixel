@@ -13,10 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserContactDtoResponse {
 
-    private String name;
+  private String name;
 
-    private String email;
+  private String email;
 
-    private String phone;
-
+  private String phone;
 }

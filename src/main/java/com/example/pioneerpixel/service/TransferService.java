@@ -4,5 +4,5 @@ import com.example.pioneerpixel.dto.TransferMoneyRequestDto;
 
 public interface TransferService {
 
-    void transferMoney(TransferMoneyRequestDto transfer);
+  void transferMoney(TransferMoneyRequestDto transfer);
 }

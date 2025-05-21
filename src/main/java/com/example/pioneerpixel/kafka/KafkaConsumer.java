@@ -9,8 +9,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class KafkaConsumer {
 
-    @KafkaListener(topics = "my-topic", groupId = "my-group", containerFactory = "transferListenerContainerFactory")
-    public void listen(TransferMoneyRequestDto transfer) {
-        System.out.println("Received message from Kafka (object): " + transfer);
-    }
+  @KafkaListener(
+      topics = "my-topic",
+      groupId = "my-group",
+      containerFactory = "transferListenerContainerFactory")
+  public void listen(TransferMoneyRequestDto transfer) {
+    System.out.println("Received message from Kafka (object): " + transfer);
+  }
 }

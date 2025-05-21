@@ -18,19 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users/email")
 public class EmailDataController {
 
-    private final EmailDataService emailDataService;
+  private final EmailDataService emailDataService;
 
-    @PostMapping("{id}")
-    public ResponseEntity<UserEmailDtoResponse> sendEmail(@PathVariable("id") Long userId,
-                                               @RequestBody UserEmailDtoRequest userEmailDtoRequest) {
-        UserEmailDtoResponse userEmailDtoResponse = emailDataService.addEmailOrUpdate(userId, userEmailDtoRequest);
-        return ResponseEntity.ok(userEmailDtoResponse);
-    }
+  @PostMapping("{id}")
+  public ResponseEntity<UserEmailDtoResponse> sendEmail(
+      @PathVariable("id") Long userId, @RequestBody UserEmailDtoRequest userEmailDtoRequest) {
+    UserEmailDtoResponse userEmailDtoResponse =
+        emailDataService.addEmailOrUpdate(userId, userEmailDtoRequest);
+    return ResponseEntity.ok(userEmailDtoResponse);
+  }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<EmailData> deleteEmail(@PathVariable("id") Long userId, @RequestBody UserEmailDtoRequest email) {
-        emailDataService.deleteEmail(userId, email);
-        return ResponseEntity.ok().build();
-    }
-
+  @DeleteMapping("/{id}")
+  public ResponseEntity<EmailData> deleteEmail(
+      @PathVariable("id") Long userId, @RequestBody UserEmailDtoRequest email) {
+    emailDataService.deleteEmail(userId, email);
+    return ResponseEntity.ok().build();
+  }
 }

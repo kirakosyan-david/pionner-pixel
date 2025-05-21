@@ -1,12 +1,11 @@
 package com.example.pioneerpixel.dto;
 
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -15,16 +14,15 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class UserDtoRequest {
 
-    private String name;
+  private String name;
 
-    private String dateOfBirth;
+  private String dateOfBirth;
 
-    private BigDecimal balance;
+  private BigDecimal balance;
 
-    private BigDecimal initialBalance;
+  private BigDecimal initialBalance;
 
-    private String email;
+  private String email;
 
-    private String phone;
-
+  private String phone;
 }

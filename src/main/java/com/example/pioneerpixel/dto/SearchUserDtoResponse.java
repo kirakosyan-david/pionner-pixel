@@ -14,13 +14,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SearchUserDtoResponse {
 
-   private String name;
-   private String phone;
-   private String email;
+  private String name;
+  private String phone;
+  private String email;
 
-   @JsonFormat(pattern = "yyyy-MM-dd")
-   private String dateOfBirth;
-   private int page;
-   private int size;
+  @JsonFormat(pattern = "yyyy-MM-dd")
+  private String dateOfBirth;
 
+  private int page;
+  private int size;
 }

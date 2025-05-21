@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOGS" value="D:\test-task\pioneer-pixel/logs-pioneer-pixel"/>
+    <property name="LOGS" value="D:\Test_Task\pioneer-pixel/logs-pioneer-pixel"/>
 
     <appender name="Console"
               class="ch.qos.logback.core.ConsoleAppender">

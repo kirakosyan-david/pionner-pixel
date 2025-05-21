@@ -8,13 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -25,17 +24,17 @@ import java.math.BigDecimal;
 @Table(name = "accounts")
 public class Account {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
+  @OneToOne
+  @JoinColumn(name = "user_id", nullable = false, unique = true)
+  private User user;
 
-    @Column(nullable = false, precision = 19, scale = 2)
-    private BigDecimal balance;
+  @Column(nullable = false, precision = 19, scale = 2)
+  private BigDecimal balance;
 
-    @Column(name = "initial_balance", precision = 19, scale = 2)
-    private BigDecimal initialBalance;
+  @Column(name = "initial_balance", precision = 19, scale = 2)
+  private BigDecimal initialBalance;
 }

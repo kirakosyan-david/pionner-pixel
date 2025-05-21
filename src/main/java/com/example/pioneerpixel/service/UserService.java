@@ -9,11 +9,11 @@ import org.springframework.data.domain.Page;
 
 public interface UserService {
 
-    UserDtoResponse getUserById(Long id);
+  UserDtoResponse getUserById(Long id);
 
-    UserContactDtoResponse getUserWithContact(Long id);
+  UserContactDtoResponse getUserWithContact(Long id);
 
-    Page<SearchUserDtoResponse> searchUser(SearchUserDto searchUserDto);
+  Page<SearchUserDtoResponse> searchUser(SearchUserDto searchUserDto);
 
-    boolean userLogin(UserLoginRequestDto loginRequestDto);
+  boolean userLogin(UserLoginRequestDto loginRequestDto);
 }

@@ -8,7 +8,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface PhoneDataMapper {
 
-    @Mapping(target = "name", expression = "java(phoneData.getUser() != null ? phoneData.getUser().getName() : null)")
-    @Mapping(source = "phoneData.phone", target = "phone")
-    UserPhoneDtoResponse mapToUserPhoneDtoResponse(PhoneData phoneData);
+  @Mapping(
+      target = "name",
+      expression = "java(phoneData.getUser() != null ? phoneData.getUser().getName() : null)")
+  @Mapping(source = "phoneData.phone", target = "phone")
+  UserPhoneDtoResponse mapToUserPhoneDtoResponse(PhoneData phoneData);
 }

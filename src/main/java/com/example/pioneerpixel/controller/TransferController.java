@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users/transfer")
 public class TransferController {
 
-    private final TransferService transferService;
+  private final TransferService transferService;
 
-
-    @PostMapping
-    public ResponseEntity<String> transfer(@RequestBody TransferMoneyRequestDto transfer) {
-        try {
-            transferService.transferMoney(transfer);
-            return ResponseEntity.ok("Transfer completed successfully");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("An error occurred during the transfer: " + e.getMessage());
-        }
+  @PostMapping
+  public ResponseEntity<String> transfer(@RequestBody TransferMoneyRequestDto transfer) {
+    try {
+      transferService.transferMoney(transfer);
+      return ResponseEntity.ok("Transfer completed successfully");
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    } catch (Exception e) {
+      return ResponseEntity.status(500)
+          .body("An error occurred during the transfer: " + e.getMessage());
     }
+  }
 }

@@ -1,6 +1,5 @@
 package com.example.pioneerpixel.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,14 +24,14 @@ import lombok.Setter;
 @Table(name = "phone_datas", uniqueConstraints = @UniqueConstraint(columnNames = "phone"))
 public class PhoneData {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false, length = 13, unique = true)
-    private String phone;
+  @Column(nullable = false, length = 13, unique = true)
+  private String phone;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 }

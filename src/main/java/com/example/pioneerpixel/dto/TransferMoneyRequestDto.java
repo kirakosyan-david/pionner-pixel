@@ -1,12 +1,11 @@
 package com.example.pioneerpixel.dto;
 
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -15,9 +14,9 @@ import java.math.BigDecimal;
 @Builder
 public class TransferMoneyRequestDto {
 
-    private Long fromUserId;
+  private Long fromUserId;
 
-    private Long toUserId;
+  private Long toUserId;
 
-    private BigDecimal amount;
+  private BigDecimal amount;
 }

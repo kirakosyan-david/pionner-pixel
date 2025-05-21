@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserPhoneDtoRequest {
 
-    private String phone;
+  private String phone;
 }

@@ -8,8 +8,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class PioneerPixelApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PioneerPixelApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(PioneerPixelApplication.class, args);
+  }
 }

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaProducer {
 
-    private final KafkaTemplate<String, TransferMoneyRequestDto> kafkaTemplate;
+  private final KafkaTemplate<String, TransferMoneyRequestDto> kafkaTemplate;
 
-    public void send(String topic, String key, TransferMoneyRequestDto dto) {
-        kafkaTemplate.send(topic, key, dto);
-        System.out.println("Message sent to Kafka (JSON): " + dto);
-    }
+  public void send(String topic, String key, TransferMoneyRequestDto dto) {
+    kafkaTemplate.send(topic, key, dto);
+    System.out.println("Message sent to Kafka (JSON): " + dto);
+  }
 }
